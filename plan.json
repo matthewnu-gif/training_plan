@@ -1,0 +1,83 @@
+{
+  "id": "repo-plan-kathryn",
+  "name": "Kathryn's plan",
+  "sessions": [
+    {
+      "id": "session-repo-gym-a",
+      "name": "Gym A",
+      "type": "normal",
+      "hidden": false,
+      "sections": [
+        {
+          "id": "section-repo-warmup",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-repo-ramp",
+              "name": "RAMP warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "General prep and movement activation before training.",
+              "links": "https://www.youtube.com/watch?v=WY3O2Xv2I-A&t=77s"
+            }
+          ],
+          "hidden": false
+        },
+        {
+          "id": "section-repo-strength",
+          "name": "Strength",
+          "activities": [
+            {
+              "id": "activity-repo-deadlift",
+              "name": "Deadlift",
+              "sets": 3,
+              "reps": "8-10",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "Build up to working sets over 3 sets with decreasing reps and increasing weight.",
+              "links": ""
+            },
+            {
+              "id": "activity-repo-bench",
+              "name": "Bench press",
+              "sets": 3,
+              "reps": "8-10",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "Build up to working sets over 3 sets with decreasing reps and increasing weight.",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "session-repo-gym-b",
+      "name": "Gym B",
+      "type": "deload",
+      "hidden": false,
+      "sections": [
+        {
+          "id": "section-repo-core",
+          "name": "Core",
+          "activities": [
+            {
+              "id": "activity-repo-russian-twists",
+              "name": "Weighted Russian twists",
+              "sets": 2,
+              "reps": "30-45s",
+              "restSec": 150,
+              "targetRpe": 7,
+              "notes": "Focus on controlled rotation and full brace.",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

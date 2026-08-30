@@ -176,6 +176,69 @@ function createDefaultState() {
   };
 }
 
+function importPlanData(parsedPlan, { replaceCurrent = false } = {}) {
+  if (!parsedPlan || !parsedPlan.name || !Array.isArray(parsedPlan.sessions)) {
+    return false;
+  }
+
+  const cleanedPlan = {
+    ...parsedPlan,
+    id: parsedPlan.id || makeId('plan'),
+    sessions: parsedPlan.sessions.map((session) => ({
+      ...session,
+      id: session.id || makeId('session'),
+      sections: Array.isArray(session.sections) ? session.sections.map((section) => ({
+        ...section,
+        id: section.id || makeId('section'),
+        activities: Array.isArray(section.activities) ? section.activities.map((activity) => ({
+          ...activity,
+          id: activity.id || makeId('activity')
+        })) : []
+      })) : []
+    }))
+  };
+
+  if (replaceCurrent) {
+    state.plans = [cleanedPlan];
+    state.activePlanId = cleanedPlan.id;
+    saveState();
+    refreshAll();
+    return true;
+  }
+
+  state.plans.push(cleanedPlan);
+  state.activePlanId = cleanedPlan.id;
+  saveState();
+  refreshAll();
+  return true;
+}
+
+function loadRepoPlan() {
+  const repoPlanPath = './plan.json';
+
+  fetch(repoPlanPath)
+    .then((response) => {
+      if (!response.ok) return;
+      return response.json();
+    })
+    .then((parsedPlan) => {
+      if (!parsedPlan) return;
+
+      const existingPlan = state.plans.find((plan) => plan.name === parsedPlan.name);
+      if (existingPlan) {
+        state.activePlanId = existingPlan.id;
+        saveState();
+        refreshAll();
+        return;
+      }
+
+      importPlanData(parsedPlan, { replaceCurrent: false });
+    })
+    .catch(() => {
+      // No repo-based plan file present; keep the default app state.
+    });
+}
+
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -1124,4 +1187,5 @@ function bindEvents() {
 
 bindEvents();
 setActiveMode('pt');
+loadRepoPlan();
 refreshAll();

@@ -1,0 +1,481 @@
+{
+  "id": "plan-1788014946230-cc0a2b",
+  "name": "Kathryn's plan",
+  "sessions": [
+    {
+      "id": "session-1788014956252-5aa9de",
+      "name": "Gym A",
+      "type": "normal",
+      "sections": [
+        {
+          "id": "section-1788014967393-e116c2",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-1788015074454-05b71c",
+              "name": "RAMP warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "",
+              "links": "https://www.youtube.com/watch?v=WY3O2Xv2I-A&t=77s&pp=ygUwVGhlIEZBU1RFU1QgYW5kIEJFU1QgV2F5IHRvIFdhcm0gVXAgZm9yIENsaW1iaW5n"
+            }
+          ]
+        },
+        {
+          "id": "section-1788015085982-f0b948",
+          "name": "Strength",
+          "activities": [
+            {
+              "id": "activity-1788015150813-5ba621",
+              "name": "Deadlift",
+              "sets": 3,
+              "reps": "8-10",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "build up to working sets over 3 sets with decreasing reps and increasing weight",
+              "links": ""
+            },
+            {
+              "id": "activity-1788015184196-0a124a",
+              "name": "Bench press",
+              "sets": 3,
+              "reps": "8-10",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "build up to working sets over 3 sets with decreasing reps and increasing weight",
+              "links": ""
+            },
+            {
+              "id": "activity-1788015314825-f256d2",
+              "name": "Dumbell row",
+              "sets": 3,
+              "reps": "8-12",
+              "restSec": 150,
+              "targetRpe": 7,
+              "notes": "",
+              "links": "https://www.youtube.com/watch?v=gfUg6qWohTk"
+            }
+          ]
+        },
+        {
+          "id": "section-1788015335490-c26b22",
+          "name": "Superset core",
+          "activities": [
+            {
+              "id": "activity-1788015398107-fcf473",
+              "name": "Weighted Russian twists",
+              "sets": 3,
+              "reps": "45-60s",
+              "restSec": 180,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788015431156-30b6d6",
+              "name": "Superman Plank",
+              "sets": 3,
+              "reps": "45-60s",
+              "restSec": 180,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            }
+          ]
+        }
+      ],
+      "hidden": false
+    },
+    {
+      "id": "session-1788015462601-fc591d",
+      "name": "Gym A",
+      "type": "deload",
+      "sections": [
+        {
+          "id": "section-1788101447090-ecf4e1",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-1788101488512-805bd4",
+              "name": "RAMP warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "",
+              "links": "https://www.youtube.com/watch?v=WY3O2Xv2I-A&t=77s&pp=ygUwVGhlIEZBU1RFU1QgYW5kIEJFU1QgV2F5IHRvIFdhcm0gVXAgZm9yIENsaW1iaW5n"
+            }
+          ],
+          "hidden": true
+        },
+        {
+          "id": "section-1788101623069-b60f5e",
+          "name": "Strength",
+          "activities": [
+            {
+              "id": "activity-1788101735713-8c25e6",
+              "name": "Deadlift",
+              "sets": 2,
+              "reps": "5-8",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788102136309-9b85b3",
+              "name": "Bench Press",
+              "sets": 2,
+              "reps": "5-8",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788101830878-aa3a52",
+              "name": "Dumbell row",
+              "sets": 2,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            }
+          ]
+        },
+        {
+          "id": "section-1788101861527-4746fa",
+          "name": "Superset core",
+          "activities": [
+            {
+              "id": "activity-1788101908902-3c020c",
+              "name": "Weighted Russian Twists",
+              "sets": 2,
+              "reps": "30-45s",
+              "restSec": 150,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788101967288-8263f3",
+              "name": "Superman Plank",
+              "sets": 2,
+              "reps": "30-45",
+              "restSec": 150,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            }
+          ]
+        }
+      ],
+      "hidden": true
+    },
+    {
+      "id": "session-1788102175932-0a6020",
+      "name": "Gym B",
+      "type": "normal",
+      "hidden": true,
+      "sections": [
+        {
+          "id": "section-1788102928415-f4a16f",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-1788103781580-db87da",
+              "name": "RAMP warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": true
+        },
+        {
+          "id": "section-1788102934456-3e9a58",
+          "name": "Strength",
+          "activities": [
+            {
+              "id": "activity-1788104040850-a9eb9c",
+              "name": "Contralateral box step-ups",
+              "sets": 3,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 8,
+              "notes": "Warm-up first with decreasing reps and increasing load. Do not push up with the back foot.",
+              "links": "https://www.youtube.com/shorts/Hbll4pU8G24"
+            },
+            {
+              "id": "activity-1788104100322-426478",
+              "name": "Lat pull down",
+              "sets": 3,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788104159790-429b66",
+              "name": "Seated Overhead dumbbell press",
+              "sets": 3,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": true
+        },
+        {
+          "id": "section-1788102966603-c2cd1d",
+          "name": "Superset Core",
+          "activities": [
+            {
+              "id": "activity-1788104217458-3ef6f0",
+              "name": "Plate deadbug",
+              "sets": 3,
+              "reps": "45-60s",
+              "restSec": 150,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788104254376-cfa835",
+              "name": "Star Side Plank",
+              "sets": 3,
+              "reps": "45-60s",
+              "restSec": 150,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "session-1788104392067-be0ffc",
+      "name": "Gym B Deload",
+      "type": "deload",
+      "hidden": true,
+      "sections": [
+        {
+          "id": "section-1788104401928-71570e",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-1788104499746-4bfc4d",
+              "name": "Ramp Warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        },
+        {
+          "id": "section-1788104407193-85e2bc",
+          "name": "Strength",
+          "activities": [
+            {
+              "id": "activity-1788105261476-bb08a1",
+              "name": "Contralateral box step-ups",
+              "sets": 2,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "Warm-up first with decreasing reps and increasing load. Do not push up with the back foot.",
+              "links": "https://www.youtube.com/shorts/Hbll4pU8G24"
+            },
+            {
+              "id": "activity-1788105162664-f17974",
+              "name": "Lat pull down",
+              "sets": 2,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 6,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788105467460-26c0ee",
+              "name": "Seated Overhead dumbbell press",
+              "sets": 2,
+              "reps": "8-12",
+              "restSec": 180,
+              "targetRpe": 7,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        },
+        {
+          "id": "section-1788104418856-7bb73b",
+          "name": "Superset Core",
+          "activities": [
+            {
+              "id": "activity-1788105537024-464260",
+              "name": "Plate deadbug",
+              "sets": 2,
+              "reps": "30-45s",
+              "restSec": 150,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            },
+            {
+              "id": "activity-1788105571894-5f2bd5",
+              "name": "Star Side Plank",
+              "sets": 2,
+              "reps": "30-45s",
+              "restSec": 150,
+              "targetRpe": 8,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "session-1788106564550-2584ba",
+      "name": "Bouldering",
+      "type": "normal",
+      "hidden": false,
+      "sections": [
+        {
+          "id": "section-1788106576906-d7214f",
+          "name": "Warm-up",
+          "activities": [
+            {
+              "id": "activity-1788106627094-6fc8bc",
+              "name": "RAMP warm-up",
+              "sets": 1,
+              "reps": "1",
+              "restSec": 0,
+              "targetRpe": 5,
+              "notes": "",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        },
+        {
+          "id": "section-1788106586228-884b11",
+          "name": "Hard boulders",
+          "activities": [
+            {
+              "id": "activity-1788106878993-849695",
+              "name": "Hard boulders",
+              "sets": 4,
+              "reps": "3–5 attempts each",
+              "restSec": 180,
+              "targetRpe": 6,
+              "notes": "Choose hard problems you can finish within 3–5 attempts. Rest 2–3 min between attempts; include preferred and non-preferred styles.",
+              "links": ""
+            }
+          ],
+          "hidden": true
+        },
+        {
+          "id": "section-1788106594009-c8a2d1",
+          "name": "Max boulders",
+          "activities": [
+            {
+              "id": "activity-1788106799845-242f43",
+              "name": "Max boulders",
+              "sets": 3,
+              "reps": "Moves, sequences and links",
+              "restSec": 180,
+              "targetRpe": 9,
+              "notes": "Choose projects beyond current max. Work individual moves, sequences and links; include preferred and non-preferred styles.",
+              "links": ""
+            }
+          ],
+          "hidden": true
+        },
+        {
+          "id": "section-1788107236416-322d25",
+          "name": "OR Fingerboard",
+          "activities": [
+            {
+              "id": "activity-1788107439567-68d3ee",
+              "name": "Fingerboard - 3-6-9s",
+              "sets": 4,
+              "reps": "3",
+              "restSec": 0,
+              "targetRpe": 6,
+              "notes": "Half crimp + 3-finger drag. Skip if fatigued from hard bouldering/crimping. 3s hang, 30s rest, 6s hang, 30s rest, 9s hang, 30s rest. Repeat for both grip types. 3-4 sets.",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "id": "session-1788106908971-324cc7",
+      "name": "Endurance",
+      "type": "normal",
+      "hidden": false,
+      "sections": [
+        {
+          "id": "section-1788106979998-7bd13d",
+          "name": "Long endurance",
+          "activities": [
+            {
+              "id": "activity-1788107069982-f1de83",
+              "name": "Long endurance",
+              "sets": 4,
+              "reps": "1-2 hour session",
+              "restSec": 300,
+              "targetRpe": 6,
+              "notes": "Use routes/circuits manageable while pumped; downclimb on jugs. Rest while partner works.",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        },
+        {
+          "id": "section-1788107143802-6a1d39",
+          "name": "4x4",
+          "activities": [
+            {
+              "id": "activity-1788107173923-093321",
+              "name": "OR Endurance 4x4 Bouldering",
+              "sets": 4,
+              "reps": "4x4",
+              "restSec": 300,
+              "targetRpe": 9,
+              "notes": "Choose 4 sub-max boulders. Climb/downclimb; repeat each 4 times starting every 2 min, then rest 5 min.",
+              "links": ""
+            }
+          ],
+          "hidden": false
+        }
+      ]
+    }
+  ],
+  "calendarAssignments": {
+    "session-1788014956252-5aa9de": 0,
+    "session-1788102175932-0a6020": 6,
+    "session-1788106908971-324cc7": 2,
+    "session-1788106564550-2584ba": 4
+  }
+}
