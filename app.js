@@ -500,6 +500,23 @@ function renderTrainingPlanOptions() {
   }
 }
 
+function formatActivityLinks(linksText) {
+  const rawLinks = String(linksText || '')
+    .split(',')
+    .map((link) => link.trim())
+    .filter(Boolean);
+
+  if (!rawLinks.length) {
+    return '<div class="small-note"><strong>Links:</strong> None</div>';
+  }
+
+  const links = rawLinks.map((link) => `
+    <a href="${link}" target="_blank" rel="noopener noreferrer">${link}</a>
+  `).join(', ');
+
+  return `<div class="small-note"><strong>Links:</strong> ${links}</div>`;
+}
+
 function renderTrainingSession(sessionId) {
   const plan = getActivePlan();
   const session = plan?.sessions.find((item) => item.id === sessionId);
@@ -521,10 +538,21 @@ function renderTrainingSession(sessionId) {
         </div>
       `).join('');
 
+      const detailsMarkup = `
+        <div class="activity-details" hidden>
+          <div class="small-note"><strong>Notes:</strong> ${activity.notes ? activity.notes : 'No notes added.'}</div>
+          ${formatActivityLinks(activity.links)}
+        </div>
+      `;
+
       return `
         <div class="activity-log">
           <strong>${activity.name}</strong>
           <div class="small-note">${activity.reps} reps • Rest ${formatRestTime(activity.restSec)} • Target RPE ${activity.targetRpe}</div>
+          <div style="margin-top:10px;">
+            <button data-action="toggle-activity-details" data-activity-id="${activity.id}">View Details</button>
+          </div>
+          ${detailsMarkup}
           ${setRows}
           <div style="margin-top:10px;">
             <button data-log-activity-id="${activity.id}" class="save-log-btn">Save Activity Log</button>
@@ -1075,6 +1103,16 @@ function bindEvents() {
       }
       if (action === 'delete-section') {
         deleteSection(sessionId, sectionId);
+      }
+      if (action === 'toggle-activity-details') {
+        const button = actionTarget;
+        const wrapper = button.closest('.activity-log');
+        const details = wrapper?.querySelector('.activity-details');
+        if (!details) return;
+
+        const isHidden = details.hasAttribute('hidden');
+        details.toggleAttribute('hidden', !isHidden);
+        button.textContent = isHidden ? 'Hide Details' : 'View Details';
       }
     }
 

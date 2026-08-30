@@ -310,6 +310,19 @@ textarea {
   padding: 12px;
 }
 
+.activity-details {
+  border-top: 1px solid var(--border);
+  margin-top: 10px;
+  padding-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.activity-details a {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
 .set-row {
   display: grid;
   grid-template-columns: 48px 90px 90px 90px 30px;
