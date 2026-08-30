@@ -1,0 +1,44 @@
+As a regular gym goer, I want an application similar to Everfit for recording my gym workouts. 
+
+-- archutecture --
+The app should be a self-contained browser based web application. It should not require any downloads to operate on a new device.
+It must work on laptops and smart-phones.
+
+Please use sensible structuring of folders and files.
+
+--key functions --
+
+PT mode: PT mode will allow the user to set up their training plan.
+
+A training plan is made up of sessions
+
+Each session includes a session name and sections.
+
+Each section holds several activities
+
+Activities have attributes of:
+	number of sets
+	number of reps per set (each set may be different)
+	Rest time between sets
+	target RPE
+	notes
+	links
+	
+Periodisation: In PT mode, the user can set the period for their deload week.
+				When setting a deload week, the user can edit a normal session to become a deload session.
+				
+				
+Training mode: The user will select the session and click through each activity in that session, entering their actual numbers for each set completed (RPE, weight, and tick to comfirm completion)
+
+		On a deload week, the user will automatically be shown deload sessions.
+		
+
+Reporting mode: A user can view the progress for each activity when in reporting mode.
+
+
+
+--data storage--
+The user should be able to import and export JSON training plans.
+
+The session data should be saved locally in the browser cache, and exportable as either json or csv.
+	

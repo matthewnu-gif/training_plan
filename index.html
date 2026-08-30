@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>LiftLog</h1>
+        </div>
+        <nav class="nav" aria-label="Main navigation">
+          <button class="nav-btn active" data-mode="pt">PT Mode</button>
+          <button class="nav-btn" data-mode="training">Training</button>
+          <button class="nav-btn" data-mode="reporting">Reporting</button>
+          <button class="nav-btn" data-mode="calendar">Calendar</button>
+        </nav>
+      </header>
+
+      <main class="content">
+        <section id="pt-mode" class="mode-panel active">
+          <div class="actions-row">
+            <button id="export-json-plan">Export Plan JSON</button>
+            <label class="file-upload">
+              <input id="import-json-plan" type="file" accept="application/json" />
+              <span>Import Plan JSON</span>
+            </label>
+            <button id="export-csv-logs">Export Workout CSV</button>
+          </div>
+
+          <div class="card form-card">
+            <h2>Plan</h2>
+            <div class="inline-form">
+              <input id="plan-name" type="text" placeholder="Plan name" />
+              <button id="create-plan-btn">Create Plan</button>
+            </div>
+            <div class="inline-form mt-sm">
+              <select id="plan-select"></select>
+              <button id="delete-plan-btn" class="danger">Delete Plan</button>
+            </div>
+          </div>
+
+          <div class="card form-card">
+            <h2>Session</h2>
+            <div class="inline-form">
+              <input id="session-name" type="text" placeholder="Session name" />
+              <select id="session-type">
+                <option value="normal">Normal</option>
+                <option value="deload">Deload</option>
+              </select>
+              <button id="create-session-btn">Add Session</button>
+            </div>
+          </div>
+
+          <div class="card form-card">
+            <h2>Section</h2>
+            <div class="inline-form">
+              <select id="section-session-select"></select>
+              <input id="section-name" type="text" placeholder="Section name" />
+              <button id="create-section-btn">Add Section</button>
+            </div>
+          </div>
+
+          <div class="card form-card">
+            <h2>Activity</h2>
+            <div class="activity-form-grid">
+              <select id="pt-session-select"></select>
+              <select id="activity-section-select"></select>
+              <input id="activity-name" type="text" placeholder="Exercise name" />
+              <input id="activity-sets" type="number" min="1" placeholder="Sets" />
+              <input id="activity-reps" type="text" placeholder="Reps e.g. 5,3,2 or 5-8" />
+              <input id="activity-rest" type="text" inputmode="numeric" placeholder="Rest mm:ss" />
+              <input id="activity-rpe" type="number" min="1" max="10" step="0.5" placeholder="Target RPE" />
+              <input id="activity-links" type="text" placeholder="Links (comma separated)" />
+              <textarea id="activity-notes" rows="3" placeholder="Notes"></textarea>
+              <button id="add-activity-btn">Add Activity</button>
+              <button id="cancel-activity-edit-btn" class="danger" style="display:none;">Cancel Edit</button>
+            </div>
+          </div>
+
+          <div class="card list-card">
+            <h2>Plan Overview</h2>
+            <div id="plan-overview"></div>
+          </div>
+        </section>
+
+        <section id="training-mode" class="mode-panel">
+          <div class="card form-card">
+            <h2>Training</h2>
+            <div class="inline-form">
+              <select id="training-plan-select"></select>
+              <select id="training-session-select"></select>
+            </div>
+            <div id="training-session-display" class="session-log"></div>
+          </div>
+        </section>
+
+        <section id="reporting-mode" class="mode-panel">
+          <div class="card form-card">
+            <h2>Reporting</h2>
+            <div id="reporting-output"></div>
+          </div>
+        </section>
+
+        <section id="calendar-mode" class="mode-panel">
+          <div class="card form-card">
+            <h2>Calendar</h2>
+            <div class="calendar-layout">
+              <div class="calendar-panel">
+                <h3>Sessions</h3>
+                <div id="calendar-session-list" class="calendar-session-list"></div>
+              </div>
+              <div id="calendar-days" class="calendar-days"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
