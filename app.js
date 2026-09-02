@@ -1,3 +1,6 @@
+import { auth, authReady, db } from './firebase-config.js';
+import { doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+
 const STORAGE_KEY = 'fitnessAppStateV1';
 const CALENDAR_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -23,6 +26,9 @@ const elements = {
   sectionSessionSelect: document.getElementById('section-session-select'),
   activitySectionSelect: document.getElementById('activity-section-select'),
   planOverview: document.getElementById('plan-overview'),
+  saveCloudBtn: document.getElementById('save-cloud-btn'),
+  loadCloudBtn: document.getElementById('load-cloud-btn'),
+  cloudStatus: document.getElementById('cloud-status'),
   calendarSessionList: document.getElementById('calendar-session-list'),
   calendarDays: document.getElementById('calendar-days'),
   trainingPlanSelect: document.getElementById('training-plan-select'),
@@ -255,6 +261,70 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function setCloudStatus(message, isError = false) {
+  elements.cloudStatus.textContent = message;
+  elements.cloudStatus.classList.toggle('error-note', isError);
+}
+
+async function getCloudUser() {
+  await authReady;
+  if (!auth.currentUser) throw new Error('Cloud sign-in is unavailable.');
+  return auth.currentUser;
+}
+
+function getCloudPlanRef(user, planId) {
+  return doc(db, 'users', user.uid, 'plans', planId);
+}
+
+async function savePlanToCloud() {
+  const plan = getActivePlan();
+  if (!plan) {
+    setCloudStatus('Create or select a plan first.', true);
+    return;
+  }
+
+  setCloudStatus('Saving...');
+  try {
+    const user = await getCloudUser();
+    await setDoc(getCloudPlanRef(user, plan.id), {
+      ...plan,
+      updatedAt: serverTimestamp()
+    });
+    setCloudStatus('Saved to cloud.');
+  } catch (error) {
+    console.error('Could not save plan to cloud', error);
+    setCloudStatus('Cloud save failed. Check Firebase setup.', true);
+  }
+}
+
+async function loadPlanFromCloud() {
+  const plan = getActivePlan();
+  if (!plan) {
+    setCloudStatus('Create or select a plan first.', true);
+    return;
+  }
+
+  setCloudStatus('Loading...');
+  try {
+    const user = await getCloudUser();
+    const snapshot = await getDoc(getCloudPlanRef(user, plan.id));
+    if (!snapshot.exists()) {
+      setCloudStatus('No cloud copy found for this plan.', true);
+      return;
+    }
+
+    const cloudPlan = snapshot.data();
+    const planIndex = state.plans.findIndex((item) => item.id === plan.id);
+    state.plans[planIndex] = { ...cloudPlan, id: plan.id };
+    saveState();
+    refreshAll();
+    setCloudStatus('Loaded from cloud.');
+  } catch (error) {
+    console.error('Could not load plan from cloud', error);
+    setCloudStatus('Cloud load failed. Check Firebase setup.', true);
+  }
 }
 
 function getActivePlan() {
@@ -1064,6 +1134,8 @@ function bindEvents() {
 
   elements.createPlanBtn.addEventListener('click', createPlan);
   elements.deletePlanBtn.addEventListener('click', deletePlan);
+  elements.saveCloudBtn.addEventListener('click', savePlanToCloud);
+  elements.loadCloudBtn.addEventListener('click', loadPlanFromCloud);
   elements.createSessionBtn.addEventListener('click', createSession);
   elements.createSectionBtn.addEventListener('click', createSection);
   elements.addActivityBtn.addEventListener('click', addActivity);
