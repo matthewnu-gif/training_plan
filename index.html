@@ -42,7 +42,12 @@
               <button id="delete-plan-btn" class="danger">Delete Plan</button>
             </div>
             <div class="actions-row mt-sm">
-              <button id="save-cloud-btn">Save to Cloud</button>
+              <select id="cloud-plan-select" aria-label="Cloud plan to load or overwrite">
+                <option value="">No cloud plans loaded</option>
+              </select>
+              <input id="cloud-new-plan-name" type="text" placeholder="New cloud plan name" />
+              <button id="save-cloud-btn">Save</button>
+              <button id="save-new-cloud-btn">Save New</button>
               <button id="load-cloud-btn">Load from Cloud</button>
               <span id="cloud-status" class="small-note" role="status"></span>
             </div>

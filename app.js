@@ -1,5 +1,5 @@
 import { auth, authReady, db } from './firebase-config.js';
-import { doc, getDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
+import { collection, doc, getDoc, getDocs, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js';
 
 const STORAGE_KEY = 'fitnessAppStateV1';
 const CALENDAR_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -27,7 +27,10 @@ const elements = {
   activitySectionSelect: document.getElementById('activity-section-select'),
   planOverview: document.getElementById('plan-overview'),
   saveCloudBtn: document.getElementById('save-cloud-btn'),
+  saveNewCloudBtn: document.getElementById('save-new-cloud-btn'),
   loadCloudBtn: document.getElementById('load-cloud-btn'),
+  cloudPlanSelect: document.getElementById('cloud-plan-select'),
+  cloudNewPlanName: document.getElementById('cloud-new-plan-name'),
   cloudStatus: document.getElementById('cloud-status'),
   calendarSessionList: document.getElementById('calendar-session-list'),
   calendarDays: document.getElementById('calendar-days'),
@@ -278,6 +281,49 @@ function getCloudPlanRef(user, planId) {
   return doc(db, 'users', user.uid, 'plans', planId);
 }
 
+async function getCloudPlans() {
+  const user = await getCloudUser();
+  const snapshot = await getDocs(collection(db, 'users', user.uid, 'plans'));
+  return snapshot.docs.map((planDoc) => ({ id: planDoc.id, ...planDoc.data() }));
+}
+
+function renderCloudPlanOptions(plans, selectedId = '') {
+  elements.cloudPlanSelect.innerHTML = '';
+  if (!plans.length) {
+    elements.cloudPlanSelect.innerHTML = '<option value="">No cloud plans found</option>';
+    return;
+  }
+
+  plans.forEach((plan) => {
+    const option = document.createElement('option');
+    option.value = plan.id;
+    option.textContent = plan.name;
+    option.selected = plan.id === selectedId;
+    elements.cloudPlanSelect.appendChild(option);
+  });
+}
+
+async function loadCloudPlanList() {
+  setCloudStatus('Loading cloud plans...');
+  try {
+    const plans = await getCloudPlans();
+    renderCloudPlanOptions(plans);
+    setCloudStatus(plans.length ? 'Select a cloud plan, then click Load from Cloud.' : 'No cloud plans found.', !plans.length);
+  } catch (error) {
+    console.error('Could not list cloud plans', error);
+    setCloudStatus('Could not load cloud plans. Check Firebase setup.', true);
+  }
+}
+
+async function savePlanDocument(planId, plan) {
+  const user = await getCloudUser();
+  await setDoc(getCloudPlanRef(user, planId), {
+    ...plan,
+    id: planId,
+    updatedAt: serverTimestamp()
+  });
+}
+
 async function savePlanToCloud() {
   const plan = getActivePlan();
   if (!plan) {
@@ -285,13 +331,15 @@ async function savePlanToCloud() {
     return;
   }
 
+  const cloudPlanId = elements.cloudPlanSelect.value;
+  if (!cloudPlanId) {
+    setCloudStatus('Load cloud plans and select a plan to overwrite.', true);
+    return;
+  }
+
   setCloudStatus('Saving...');
   try {
-    const user = await getCloudUser();
-    await setDoc(getCloudPlanRef(user, plan.id), {
-      ...plan,
-      updatedAt: serverTimestamp()
-    });
+    await savePlanDocument(cloudPlanId, plan);
     setCloudStatus('Saved to cloud.');
   } catch (error) {
     console.error('Could not save plan to cloud', error);
@@ -299,25 +347,63 @@ async function savePlanToCloud() {
   }
 }
 
-async function loadPlanFromCloud() {
+async function saveNewPlanToCloud() {
   const plan = getActivePlan();
   if (!plan) {
     setCloudStatus('Create or select a plan first.', true);
     return;
   }
 
+  const newName = elements.cloudNewPlanName.value.trim() || plan.name.trim();
+  if (!newName) {
+    setCloudStatus('Enter a name for the new cloud plan.', true);
+    return;
+  }
+
+  setCloudStatus('Checking cloud plan names...');
+  try {
+    const cloudPlans = await getCloudPlans();
+    if (cloudPlans.some((cloudPlan) => cloudPlan.name.trim().toLowerCase() === newName.toLowerCase())) {
+      setCloudStatus('A cloud plan already has that name. Choose a different name.', true);
+      return;
+    }
+
+    const newPlanId = makeId('plan');
+    await savePlanDocument(newPlanId, { ...plan, id: newPlanId, name: newName });
+    elements.cloudNewPlanName.value = '';
+    await loadCloudPlanList();
+    elements.cloudPlanSelect.value = newPlanId;
+    setCloudStatus('New plan saved to cloud.');
+  } catch (error) {
+    console.error('Could not save new plan to cloud', error);
+    setCloudStatus('Cloud save failed. Check Firebase setup.', true);
+  }
+}
+
+async function loadPlanFromCloud() {
+  if (!elements.cloudPlanSelect.value) {
+    await loadCloudPlanList();
+    return;
+  }
+
   setCloudStatus('Loading...');
   try {
     const user = await getCloudUser();
-    const snapshot = await getDoc(getCloudPlanRef(user, plan.id));
+    const snapshot = await getDoc(getCloudPlanRef(user, elements.cloudPlanSelect.value));
     if (!snapshot.exists()) {
-      setCloudStatus('No cloud copy found for this plan.', true);
+      setCloudStatus('That cloud plan no longer exists. Reload the cloud plan list.', true);
       return;
     }
 
     const cloudPlan = snapshot.data();
-    const planIndex = state.plans.findIndex((item) => item.id === plan.id);
-    state.plans[planIndex] = { ...cloudPlan, id: plan.id };
+    const localPlan = { ...cloudPlan, id: snapshot.id };
+    const planIndex = state.plans.findIndex((item) => item.id === state.activePlanId);
+    if (planIndex === -1) {
+      state.plans.push(localPlan);
+    } else {
+      state.plans[planIndex] = localPlan;
+    }
+    state.activePlanId = localPlan.id;
     saveState();
     refreshAll();
     setCloudStatus('Loaded from cloud.');
@@ -1135,6 +1221,7 @@ function bindEvents() {
   elements.createPlanBtn.addEventListener('click', createPlan);
   elements.deletePlanBtn.addEventListener('click', deletePlan);
   elements.saveCloudBtn.addEventListener('click', savePlanToCloud);
+  elements.saveNewCloudBtn.addEventListener('click', saveNewPlanToCloud);
   elements.loadCloudBtn.addEventListener('click', loadPlanFromCloud);
   elements.createSessionBtn.addEventListener('click', createSession);
   elements.createSectionBtn.addEventListener('click', createSection);
