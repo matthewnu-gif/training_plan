@@ -278,12 +278,11 @@ async function getCloudUser() {
 }
 
 function getCloudPlanRef(user, planId) {
-  return doc(db, 'users', user.uid, 'plans', planId);
+  return doc(db, 'publicPlans', planId);
 }
 
 async function getCloudPlans() {
-  const user = await getCloudUser();
-  const snapshot = await getDocs(collection(db, 'users', user.uid, 'plans'));
+  const snapshot = await getDocs(collection(db, 'publicPlans'));
   return snapshot.docs.map((planDoc) => ({ id: planDoc.id, ...planDoc.data() }));
 }
 
@@ -320,6 +319,7 @@ async function savePlanDocument(planId, plan) {
   await setDoc(getCloudPlanRef(user, planId), {
     ...plan,
     id: planId,
+    ownerUid: user.uid,
     updatedAt: serverTimestamp()
   });
 }
@@ -339,6 +339,13 @@ async function savePlanToCloud() {
 
   setCloudStatus('Saving...');
   try {
+    const cloudPlans = await getCloudPlans();
+    const selectedCloudPlan = cloudPlans.find((cloudPlan) => cloudPlan.id === cloudPlanId);
+    const user = await getCloudUser();
+    if (!selectedCloudPlan || selectedCloudPlan.ownerUid !== user.uid) {
+      setCloudStatus('Only the plan owner can overwrite this public plan. Use Save New instead.', true);
+      return;
+    }
     await savePlanDocument(cloudPlanId, plan);
     setCloudStatus('Saved to cloud.');
   } catch (error) {
@@ -1348,3 +1355,4 @@ bindEvents();
 setActiveMode('pt');
 loadRepoPlan();
 refreshAll();
+loadCloudPlanList();
